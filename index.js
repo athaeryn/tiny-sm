@@ -10,7 +10,7 @@ module.exports = (function() {
 
   TinySM.prototype = {
     add: function addState(name, state) {
-      this._states[name] = state.call ? { enter: state} : state;
+      this._states[name] = state && state.call ? { enter: state} : state;
       return this;
     },
     to: function toState(name) {

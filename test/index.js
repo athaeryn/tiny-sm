@@ -14,6 +14,9 @@ describe("TinySM", function() {
       sm.add("foo", function() {});
       assert(sm._states["foo"].enter.call);
     });
+    it("shouldn't throw an error when adding an undefined state", function() {
+      TinySM().add("foo");
+    });
   });
 
   describe("#to", function() {
