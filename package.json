@@ -1,0 +1,15 @@
+{
+  "name": "tiny-sm",
+  "version": "1.0.0",
+  "description": "A tiny state machine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "state",
+    "machine"
+  ],
+  "author": "Mike Anderson",
+  "license": "MIT"
+}
