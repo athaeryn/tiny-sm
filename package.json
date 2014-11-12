@@ -4,12 +4,15 @@
   "description": "A tiny state machine",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha"
   },
   "keywords": [
     "state",
     "machine"
   ],
   "author": "Mike Anderson",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.0.1"
+  }
 }

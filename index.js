@@ -9,13 +9,15 @@ module.exports = (function() {
   }
 
   TinySM.prototype = {
-    add: function addState(name, stateObject) {
-      this._states[name] = stateObject;
+    add: function addState(name, state) {
+      this._states[name] = state.call ? { enter: state} : state;
+      return this;
     },
     to: function toState(name) {
       try { this._current.exit.call(this._context);  } catch (e) {}
       try { this._current = this._states[name];      } catch (e) {}
       try { this._current.enter.call(this._context); } catch (e) {}
+      return this;
     }
   };
 
