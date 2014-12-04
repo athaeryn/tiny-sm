@@ -14,9 +14,16 @@ module.exports = (function() {
       return this;
     },
     to: function toState(name) {
-      try { this._current.exit.call(this._context);  } catch (e) {}
-      try { this._current = this._states[name];      } catch (e) {}
-      try { this._current.enter.call(this._context); } catch (e) {}
+      var args = Array.prototype.slice.call(arguments, 1);
+      try {
+        this._current.exit.call(this._context);
+      } catch (e) {}
+      try {
+        this._current = this._states[name];
+      } catch (e) {}
+      try {
+        this._current.enter.apply(this._context, args);
+      } catch (e) {}
       return this;
     }
   };
