@@ -35,5 +35,13 @@ describe("TinySM", function() {
         .to("bar");
       assert(exited);
     });
+    it("should pass arguments on to the state function", function() {
+      var sm = new TinySM,
+          arg_received;
+      sm.add("foo", function() {
+        arg_received = Array.prototype.slice.call(arguments, 0);
+      }).to("foo", 4, 8, 15, 16, 23, 42);
+      assert(arg_received.length === 6);
+    });
   });
 });
