@@ -3,45 +3,55 @@ var assert = require("assert"),
 
 
 describe("TinySM", function() {
-  describe("#add", function() {
+  describe("#constructor", function() {
     it("should accept new states", function() {
-      var sm = new TinySM;
-      sm.add("foo", { enter: function() {} });
+      var sm = new TinySM({
+        foo: { enter: function() {} }
+      });
       assert(sm._states["foo"]);
     });
     it("should accept just a function", function() {
-      var sm = new TinySM;
-      sm.add("foo", function() {});
+      var sm = new TinySM({
+        foo: function() {}
+      });
       assert(sm._states["foo"].enter.call);
     });
-    it("shouldn't throw an error when adding an undefined state", function() {
-      TinySM().add("foo");
+    it("should throw an error when you pass it nothing", function() {
+      var sm;
+      try {
+        sm = new TinySM;
+      } catch(e) {
+        assert.equal(e.message, "Cannot create TinySM without states");
+      }
     });
   });
 
   describe("#to", function() {
     it("should transition to a state", function() {
-      var sm = new TinySM,
+      var sm = new TinySM({
+            foo: function() { entered = true; }
+          }),
           entered = false;
-      sm.add("foo", function() { entered = true; })
-        .to("foo");
+      sm.to("foo");
       assert(entered);
     });
     it("should transition from a state", function() {
-      var sm = new TinySM,
+      var sm = new TinySM({
+            foo: { exit: function() { exited = true; } }
+          }),
           exited = false;
-      sm.add("foo", { exit: function() { exited = true; } })
-        .to("foo")
-        .to("bar");
+      sm.to("foo").to("bar");
       assert(exited);
     });
     it("should pass arguments on to the state function", function() {
-      var sm = new TinySM,
-          arg_received;
-      sm.add("foo", function() {
-        arg_received = Array.prototype.slice.call(arguments, 0);
-      }).to("foo", 4, 8, 15, 16, 23, 42);
-      assert(arg_received.length === 6);
+      var sm = new TinySM({
+          foo: function() {
+            args_received = Array.prototype.slice.call(arguments, 0);
+          }
+        }),
+        arg_received;
+      sm.to("foo", 4, 8, 15, 16, 23, 42);
+      assert.equal(6, args_received.length);
     });
   });
 });

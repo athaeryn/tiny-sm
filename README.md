@@ -1,7 +1,8 @@
-# tiny-sm
+# TinySM
 
-This is a tiny JavaScript state machine that doesn't worry about what you're
-transitioning to or from.
+A tiny state machine that doesn't worry about where you came from or where
+you're going.
+
 
 ## Installation
 
@@ -12,11 +13,29 @@ $ npm install tiny-sm
 ## Example Usage
 
 ```js
-var TinySM = require("tiny-sm");
+let sm1 = new TinySM({
+  foo: (x) => console.log(x)
+});
 
-sm = new TinySM;
-sm.add("foo", console.log.bind(console, "foo"));
-sm.to("foo");
+sm1.to("foo", 42);
+// 42
 
-// logs "foo"
+
+let sm2 = new TinySM({
+  foo: {
+    enter: () => console.log("Entering foo."),
+    exit:  () => console.log("Exiting foo.")
+  },
+  bar: () => console.log("Entering bar.")
+});
+
+sm2.to("foo");
+// "Entering foo."
+
+sm2.to("bar");
+// "Exiting foo."
+// "Entering bar."
+
+sm2.to("foo");
+// "Entering foo."
 ```
