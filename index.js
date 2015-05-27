@@ -7,7 +7,7 @@ module.exports = (function() {
     if (!(this instanceof TinySM)) return new TinySM(context);
     this._states  = {};
     this._current = {};
-    this._context = context || null;
+    this._context = context || this;
     try {
       var stateNames = Object.keys(states);
     } catch (e) {
@@ -26,16 +26,16 @@ module.exports = (function() {
     to: function toState(name) {
       var args;
       // Exit the old state.
-      try {
+      if (this._current && this._current.exit && this._current.exit.call) {
         this._current.exit.call(this._context);
-      } catch (e) { }
+      }
       // Set the new state.
       this._current = this._states[name];
       // Enter the new state.
-      try {
+      if (this._current && this._current.enter && this._current.enter.call) {
         args = Array.prototype.slice.call(arguments, 1);
         this._current.enter.apply(this._context, args);
-      } catch (e) { }
+      }
       return this;
     }
   };

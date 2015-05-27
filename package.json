@@ -1,10 +1,10 @@
 {
   "name": "tiny-sm",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A tiny state machine",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha || true"
   },
   "repository": {
     "type": "git",
